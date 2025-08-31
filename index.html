@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My Cool HTML Site</title>
+  <meta name="description" content="A clean, responsive starter you can edit in VS Code." />
+  <style>
+    :root {
+      --bg: #0b1020;
+      --card: #121a33;
+      --text: #e9eef7;
+      --muted: #b6c2e2;
+      --accent: #6aa9ff;
+      --accent-2: #7ef0d0;
+      --ring: rgba(122, 179, 255, 0.5);
+      --shadow: 0 10px 30px rgba(0,0,0,.25);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text);
+      background: radial-gradient(1200px 600px at 10% -10%, #142042 0%, #0b1020 60%),
+                  radial-gradient(1000px 500px at 120% 10%, #0e1a36 0%, #0b1020 50%),
+                  var(--bg);
+    }
+
+    /* Layout */
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 1rem; }
+    .grid { display: grid; gap: 1rem; }
+
+    /* Navbar */
+    header {
+      position: sticky; top: 0; inset-inline: 0; z-index: 50;
+      backdrop-filter: blur(8px);
+      background: linear-gradient(180deg, rgba(11,16,32,0.9), rgba(11,16,32,0.6));
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; padding: .8rem 0; }
+    .brand { display: flex; align-items: center; gap: .6rem; font-weight: 700; letter-spacing: .3px; }
+    .brand .logo {
+      width: 36px; height: 36px; border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: var(--shadow);
+    }
+    .links { display: flex; align-items: center; gap: 1rem; }
+    .links a { text-decoration: none; color: var(--muted); font-weight: 600; }
+    .links a:hover { color: var(--text); }
+    .actions { display: flex; align-items: center; gap: .6rem; }
+    .btn, button.btn { border: none; cursor: pointer; }
+    .btn {
+      display: inline-flex; align-items: center; gap: .5rem; 
+      padding: .55rem .9rem; border-radius: 999px; font-weight: 700;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #0b1020; box-shadow: var(--shadow);
+    }
+    .ghost {
+      background: transparent; color: var(--muted); border: 1px solid rgba(255,255,255,.1);
+    }
+
+    /* Mobile nav */
+    .menu-toggle { display: none; }
+    @media (max-width: 820px) {
+      .links { display: none; }
+      .menu-toggle { display: inline-flex; }
+      .mobile-menu { display: none; }
+      .mobile-menu.open { display: grid; gap: .6rem; padding: .8rem 0 1rem; }
+      .mobile-menu a { color: var(--muted); text-decoration: none; padding: .5rem 0; border-bottom: 1px dashed rgba(255,255,255,.08); }
+    }
+
+    /* Hero */
+    .hero { padding: 4.5rem 0 3rem; }
+    .hero h1 { font-size: clamp(2rem, 6vw, 3.2rem); line-height: 1.05; margin: 0 0 .8rem; }
+    .lead { color: var(--muted); font-size: clamp(1rem, 2.5vw, 1.15rem); max-width: 65ch; }
+    .cta { display: flex; gap: .8rem; flex-wrap: wrap; margin-top: 1.2rem; }
+
+    /* Cards */
+    .cards { grid-template-columns: repeat(12, 1fr); margin: 2rem 0; }
+    .card { grid-column: span 12; background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
+      border: 1px solid rgba(255,255,255,.08); border-radius: 22px; padding: 1.1rem; box-shadow: var(--shadow);
+    }
+    .card h3 { margin: .2rem 0 .5rem; }
+    .badge { font-size: .75rem; padding: .25rem .5rem; border-radius: 999px; border: 1px solid rgba(255,255,255,.15); color: var(--muted); }
+
+    @media (min-width: 720px) {
+      .card { grid-column: span 4; }
+    }
+
+    /* Gallery */
+    .gallery { grid-template-columns: repeat(12, 1fr); margin: 2.2rem 0; }
+    .tile { grid-column: span 12; border-radius: 18px; overflow: hidden; border: 1px solid rgba(255,255,255,.08); }
+    .tile img { display: block; width: 100%; height: 220px; object-fit: cover; }
+    @media (min-width: 720px) { .tile { grid-column: span 4; } .tile img { height: 180px; } }
+
+    /* Contact */
+    form { background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
+      border: 1px solid rgba(255,255,255,.08); border-radius: 22px; padding: 1.1rem; box-shadow: var(--shadow); }
+    label { display: block; font-weight: 600; color: var(--muted); margin-bottom: .35rem; }
+    input, textarea { width: 100%; padding: .8rem .9rem; border-radius: 12px; border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.02); color: var(--text); }
+    input:focus, textarea:focus { outline: none; border-color: var(--ring); box-shadow: 0 0 0 4px var(--ring); }
+
+    footer { padding: 2.2rem 0; color: var(--muted); text-align: center; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <span>MySite</span>
+      </div>
+      <nav class="links" aria-label="primary">
+        <a href="#features">Features</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="actions">
+        <button class="btn ghost" id="themeBtn" aria-pressed="false" aria-label="Toggle theme">Theme</button>
+        <button class="btn menu-toggle" id="menuBtn" aria-expanded="false" aria-controls="mobileMenu">Menu</button>
+        <a class="btn" href="#contact">Get Started</a>
+      </div>
+    </div>
+    <div class="container mobile-menu" id="mobileMenu" aria-label="mobile">
+      <a href="#features">Features</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero" id="home">
+      <h1>Build your site fast — and make it look good</h1>
+      <p class="lead">This is a simple, responsive HTML starter you can open in Visual Studio Code and customize. Clean layout, sticky navbar, cards, gallery and a contact form. No build tools needed.</p>
+      <div class="cta">
+        <a class="btn" href="#features">Explore Features</a>
+        <a class="btn ghost" href="#contact">Say Hello</a>
+      </div>
+    </section>
+
+    <section id="features">
+      <h2>Features</h2>
+      <div class="grid cards">
+        <article class="card">
+          <span class="badge">Responsive</span>
+          <h3>Mobile‑first layout</h3>
+          <p>Looks great on phones, tablets, and desktops without extra work.</p>
+        </article>
+        <article class="card">
+          <span class="badge">Accessible</span>
+          <h3>Keyboard & ARIA ready</h3>
+          <p>Semantic HTML with sensible focus and aria attributes.</p>
+        </article>
+        <article class="card">
+          <span class="badge">No build</span>
+          <h3>Just open & edit</h3>
+          <p>Pure HTML/CSS/JS. Drop it into VS Code and go.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="gallery">
+      <h2>Gallery</h2>
+      <div class="grid gallery">
+        <figure class="tile"><img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1400&auto=format&fit=crop" alt="Abstract blue lights" /></figure>
+        <figure class="tile"><img src="https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=1400&auto=format&fit=crop" alt="Neon city" /></figure>
+        <figure class="tile"><img src="https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=1400&auto=format&fit=crop" alt="Gradient shapes" /></figure>
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2>Contact</h2>
+      <form onsubmit="event.preventDefault(); alert('Thanks! I\'ll get back to you.');">
+        <div class="grid" style="grid-template-columns: 1fr 1fr; gap: .8rem;">
+          <div>
+            <label for="name">Name</label>
+            <input id="name" name="name" placeholder="Your name" required />
+          </div>
+          <div>
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" placeholder="you@example.com" required />
+          </div>
+        </div>
+        <div style="margin-top:.8rem;">
+          <label for="msg">Message</label>
+          <textarea id="msg" name="message" rows="5" placeholder="Type your message…" required></textarea>
+        </div>
+        <div style="margin-top:1rem; display:flex; gap:.6rem;">
+          <button class="btn" type="submit">Send Message</button>
+          <button class="btn ghost" type="reset">Reset</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">© <span id="year"></span> MySite — Built with ♥ using plain HTML</div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    if (menuBtn) {
+      menuBtn.addEventListener('click', () => {
+        const open = mobileMenu.classList.toggle('open');
+        menuBtn.setAttribute('aria-expanded', String(open));
+      });
+    }
+
+    // Theme toggle (light/dark)
+    const themeBtn = document.getElementById('themeBtn');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    let dark = true;
+    function applyTheme() {
+      document.body.style.filter = dark ? 'none' : 'saturate(1.05) brightness(1.1)';
+      themeBtn.setAttribute('aria-pressed', String(dark));
+    }
+    if (themeBtn) {
+      themeBtn.addEventListener('click', () => { dark = !dark; applyTheme(); });
+      applyTheme();
+    }
+
+    // Year stamp
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
